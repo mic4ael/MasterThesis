@@ -1,0 +1,29 @@
+body {
+    background-color: #EEE;
+}
+
+.form-signin {
+    width: 344px;
+    padding: 15px;
+    margin: 20px auto;
+}
+
+.form-signin input {
+    padding: 10px;
+    height: auto;
+    font-size: 16px;
+    color: #464A4C;
+    box-sizing: border-box;
+}
+
+.form-signin > #email {
+    margin-bottom: -1px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.form-signin > #password {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}

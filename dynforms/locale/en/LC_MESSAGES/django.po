@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-27 21:54+0200\n"
+"POT-Creation-Date: 2017-03-27 23:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,28 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: dynforms/templates/dynforms/base.html:6
+#: dynforms/templates/dynforms/base.html:9
 msgid "Dynamiczne formularze"
 msgstr "Dynamic forms"
+
+#: dynforms/templates/dynforms/login.html:8
+msgid "Strona logowania"
+msgstr "Login page"
+
+#: dynforms/templates/dynforms/login.html:21
+msgid "Proszę się zalogować"
+msgstr "Please log in"
+
+#: dynforms/templates/dynforms/login.html:24
+#: dynforms/templates/dynforms/login.html:27
+msgid "Adres mailowy"
+msgstr "Email address"
+
+#: dynforms/templates/dynforms/login.html:29
+#: dynforms/templates/dynforms/login.html:31
+msgid "Hasło"
+msgstr "Password"
+
+#: dynforms/templates/dynforms/login.html:33
+msgid "Zaloguj się"
+msgstr "Log in"

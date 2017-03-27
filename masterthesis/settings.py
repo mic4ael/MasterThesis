@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'dynforms.apps.DynformsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -112,6 +113,10 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'Europe/Warsaw'
 
 USE_I18N = True
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)
 
 USE_L10N = True
 

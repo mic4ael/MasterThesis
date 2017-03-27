@@ -1,0 +1,27 @@
+{% load i18n %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>
+            {% block title %}
+                {% trans "Dynamiczne formularze" %}
+            {% endblock %}
+        </title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        {% block styles %}
+            <link rel="stylesheet" type="text/css" 
+                  href="{% static "dynforms/bootstrap/css/bootstrap.css" %}">
+            <link rel="stylesheet" type="text/css" 
+                  href="{% static "dynforms/custom/css/base.css" %}">
+        {% endblock %}
+    </head>
+    <body>
+        <div id="container">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </body>
+</html>

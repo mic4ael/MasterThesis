@@ -9,8 +9,7 @@ body {
 }
 
 .form-signin input {
-    padding: 10px;
-    height: auto;
+    height: 45px;
     font-size: 16px;
     color: #464A4C;
     box-sizing: border-box;
@@ -23,7 +22,11 @@ body {
 }
 
 .form-signin > #password {
-    margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+}
+
+.form-signin .form-group.has-error .alert-danger {
+    padding: 5px;
+    margin: 5px 0;
 }

@@ -1,0 +1,19 @@
+{% extends 'dynforms/base.html' %}
+
+{% load i18n %}
+{% load static %}
+
+
+{% block title %}
+    {% trans 'Strona głowna' %}
+{% endblock %}
+
+{% block styles %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css"
+          href="{% static "dynforms/custom/css/home.css" %}">
+{% endblock %}
+
+{% block content %}
+    
+{% endblock %}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-03-27 23:45+0200\n"
+"POT-Creation-Date: 2017-04-07 19:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,6 +21,12 @@ msgstr ""
 msgid "Dynamiczne formularze"
 msgstr "Dynamic forms"
 
+#: dynforms/templates/dynforms/home.html:8
+#, fuzzy
+#| msgid "Strona logowania"
+msgid "Strona głowna"
+msgstr "Home"
+
 #: dynforms/templates/dynforms/login.html:8
 msgid "Strona logowania"
 msgstr "Login page"
@@ -29,16 +35,16 @@ msgstr "Login page"
 msgid "Proszę się zalogować"
 msgstr "Please log in"
 
-#: dynforms/templates/dynforms/login.html:24
-#: dynforms/templates/dynforms/login.html:27
-msgid "Adres mailowy"
-msgstr "Email address"
+#: dynforms/templates/dynforms/login.html:25
+#: dynforms/templates/dynforms/login.html:28
+msgid "Nazwa uzytkownika"
+msgstr "Username"
 
-#: dynforms/templates/dynforms/login.html:29
-#: dynforms/templates/dynforms/login.html:31
+#: dynforms/templates/dynforms/login.html:38
+#: dynforms/templates/dynforms/login.html:40
 msgid "Hasło"
 msgstr "Password"
 
-#: dynforms/templates/dynforms/login.html:33
+#: dynforms/templates/dynforms/login.html:49
 msgid "Zaloguj się"
 msgstr "Log in"

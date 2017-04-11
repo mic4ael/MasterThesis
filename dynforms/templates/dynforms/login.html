@@ -26,10 +26,10 @@
 
                 <div class="form-group {% if form.username.errors %}has-error{% endif %}">
                     <label for="username" class="sr-only">
-                        {% trans 'Nazwa uzytkownika' %}
+                        {% trans 'Nazwa użytkownika' %}
                     </label>
                     <input type="username" id="username" class="form-control"
-                           name="username" placeholder="{% trans 'Nazwa uzytkownika' %}"
+                           name="username" placeholder="{% trans 'Nazwa użytkownika' %}"
                            required="required" autofocus="true"
                            value="{% firstof form.username.value '' %}">
                     {% if form.username.errors %}

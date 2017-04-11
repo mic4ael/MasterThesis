@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-11 22:43+0200\n"
+"POT-Creation-Date: 2017-04-11 23:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -70,13 +70,14 @@ msgstr "Password"
 msgid "Zaloguj się"
 msgstr "Log in"
 
-#: dynforms/templates/dynforms/register.html:8
-msgid "Rejestracja"
-msgstr "Registration"
-
+#: dynforms/templates/dynforms/login.html:56
 #: dynforms/templates/dynforms/register.html:24
 msgid "Utwórz konto"
 msgstr "Create an account"
+
+#: dynforms/templates/dynforms/register.html:8
+msgid "Rejestracja"
+msgstr "Registration"
 
 #: dynforms/templates/dynforms/register.html:43
 #: dynforms/templates/dynforms/register.html:47

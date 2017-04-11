@@ -1,0 +1,9 @@
+body {
+    background-color: #EEE;
+}
+
+.form-signup {
+    width: 344px;
+    padding: 15px;
+    margin: 20px auto;
+}

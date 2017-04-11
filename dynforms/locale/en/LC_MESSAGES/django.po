@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-07 19:45+0200\n"
+"POT-Creation-Date: 2017-04-11 22:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,34 +17,84 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: dynforms/templates/dynforms/base.html:9
-msgid "Dynamiczne formularze"
-msgstr "Dynamic forms"
-
 #: dynforms/templates/dynforms/home.html:8
+#: dynforms/templates/dynforms/home.html:20
 #, fuzzy
 #| msgid "Strona logowania"
-msgid "Strona głowna"
+msgid "Strona główna"
 msgstr "Home"
+
+#: dynforms/templates/dynforms/home.html:33
+msgid "Ustawienia"
+msgstr "Settings"
+
+#: dynforms/templates/dynforms/home.html:39
+#, fuzzy
+#| msgid "Zaloguj się"
+msgid "Wyloguj się"
+msgstr "Log out"
+
+#: dynforms/templates/dynforms/home.html:50
+msgid "Formularze"
+msgstr "Forms"
+
+#: dynforms/templates/dynforms/layout_base.html:9
+msgid "Dynamiczne formularze"
+msgstr "Dynamic forms"
 
 #: dynforms/templates/dynforms/login.html:8
 msgid "Strona logowania"
 msgstr "Login page"
 
-#: dynforms/templates/dynforms/login.html:21
+#: dynforms/templates/dynforms/login.html:24
 msgid "Proszę się zalogować"
 msgstr "Please log in"
 
-#: dynforms/templates/dynforms/login.html:25
-#: dynforms/templates/dynforms/login.html:28
-msgid "Nazwa uzytkownika"
+#: dynforms/templates/dynforms/login.html:29
+#: dynforms/templates/dynforms/login.html:32
+#: dynforms/templates/dynforms/register.html:28
+#: dynforms/templates/dynforms/register.html:32
+#, fuzzy
+#| msgid "Nazwa uzytkownika"
+msgid "Nazwa użytkownika"
 msgstr "Username"
 
-#: dynforms/templates/dynforms/login.html:38
-#: dynforms/templates/dynforms/login.html:40
+#: dynforms/templates/dynforms/login.html:42
+#: dynforms/templates/dynforms/login.html:44
+#: dynforms/templates/dynforms/register.html:85
+#: dynforms/templates/dynforms/register.html:89
 msgid "Hasło"
 msgstr "Password"
 
-#: dynforms/templates/dynforms/login.html:49
+#: dynforms/templates/dynforms/login.html:53
 msgid "Zaloguj się"
 msgstr "Log in"
+
+#: dynforms/templates/dynforms/register.html:8
+msgid "Rejestracja"
+msgstr "Registration"
+
+#: dynforms/templates/dynforms/register.html:24
+msgid "Utwórz konto"
+msgstr "Create an account"
+
+#: dynforms/templates/dynforms/register.html:43
+#: dynforms/templates/dynforms/register.html:47
+msgid "Adres mailowy"
+msgstr "E-mail address"
+
+#: dynforms/templates/dynforms/register.html:57
+#: dynforms/templates/dynforms/register.html:61
+msgid "Imię"
+msgstr "First name"
+
+#: dynforms/templates/dynforms/register.html:71
+#: dynforms/templates/dynforms/register.html:75
+msgid "Nazwisko"
+msgstr "Last name"
+
+#: dynforms/templates/dynforms/register.html:98
+#, fuzzy
+#| msgid "Zaloguj się"
+msgid "Zarejestruj się"
+msgstr "Register"

@@ -4,7 +4,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic.base import TemplateView, View
 
-from dynforms.forms import LoginForm
+from dynforms.forms import LoginForm, RegistrationForm
 from masterthesis import settings
 
 
@@ -39,6 +39,19 @@ class LogoutView(LoginRequiredMixin, View):
 
     def post(self, request):
         return self._logout_user(request)
+
+
+class RegistrationView(TemplateView):
+    template_name = 'dynforms/register.html'
+
+    def get(self, request):
+        return render(request, self.template_name, {'form': RegistrationForm()})
+
+    def post(self, request):
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            pass
+        return render(request, self.template_name, {'form': form})
 
 
 class HomeView(LoginRequiredMixin, TemplateView):

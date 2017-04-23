@@ -1,3 +1,13 @@
 from django.db import models
 
-# Create your models here.
+
+class Form(models.Model):
+    pass
+
+
+class BaseFormField(models.Model):
+    pass
+
+
+class FormFieldAnswer(models.Model):
+    pass

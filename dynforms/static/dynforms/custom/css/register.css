@@ -7,3 +7,8 @@ body {
     padding: 15px;
     margin: 20px auto;
 }
+
+.form-signup .form-group.has-error .alert-danger {
+    padding: 5px;
+    margin: 5px 0;
+}

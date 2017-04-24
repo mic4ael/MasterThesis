@@ -8,5 +8,6 @@ urlpatterns = [
     url(r'^logout$', views.LogoutView.as_view(), name='logout'),
     url(r'^register$', views.RegistrationView.as_view(), name='register'),
 
-    url(r'^home$', views.HomeView.as_view(), name='home')
+    url(r'^home$', views.HomeView.as_view(), name='home'),
+    url(r'^languages$', views.LanguagesView.as_view(), name='languages'),
 ]

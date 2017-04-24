@@ -6,6 +6,7 @@ from django.shortcuts import render
 from django.views.generic.base import TemplateView, View
 
 from dynforms.forms import LoginForm, RegistrationForm
+from dynforms.models import Language
 from masterthesis import settings
 
 
@@ -59,3 +60,12 @@ class RegistrationView(TemplateView):
 
 class HomeView(LoginRequiredMixin, TemplateView):
     template_name = 'dynforms/home.html'
+
+
+class LanguagesView(LoginRequiredMixin, TemplateView):
+    template_name = 'dynforms/languages.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(LanguagesView, self).get_context_data(**kwargs)
+        context['languages'] = Language.objects.all()
+        return context

@@ -19,53 +19,48 @@
         {% endblock %}
     </head>
     <body>
-        <div id="container">
-            <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-                <div class="navbar-header">
-                    <a href="" class="navbar-brand">{% trans 'Strona główna' %}</a>
-                </div>
-                <ul class="nav navbar-right top-nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+        <div class="wrapper">
+            <div class="sidebar-wrapper">
+                <ul class="sidebar-nav">
+                    <li class="sidebar-brand">
+                        <a href="#">
                             <i class="glyphicon glyphicon-user"></i>
                             {{ request.user.get_full_name }}
-                            <b class="caret"></b>
                         </a>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="#">
-                                    <i class="glyphicon glyphicon-cog"></i>
-                                    {% trans 'Ustawienia' %}
-                                </a>
-                            </li>
-                            <li>
-                                <a href="{% url 'logout' %}">
-                                    <i class="glyphicon glyphicon-off"></i>
-                                    {% trans 'Wyloguj się' %}
-                                </a>
-                            </li>
-                        </ul>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="glyphicon glyphicon-menu-hamburger"></i>
+                            {% trans 'Formularze' %}
+                        </a>
+                    </li>
+                    {% url 'languages' as languages_url %}
+                    <li class="{% if request.get_full_path == languages_url %}active{% endif %}">
+                        <a href="{{ languages_url }}">
+                            <i class="glyphicon glyphicon-globe"></i>
+                            {% trans 'Dostępne języki' %}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="glyphicon glyphicon-cog"></i>
+                            {% trans 'Ustawienia' %}
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'logout' %}">
+                            <i class="glyphicon glyphicon-off"></i>
+                            {% trans 'Wyloguj się' %}
+                        </a>
                     </li>
                 </ul>
-                <div class="collapse navbar-collapse navbar-ex1-collapse">
-                    <ul class="nav navbar-nav side-nav">
-                        <li class="active">
-                            <a href="#">
-                                <i class="glyphicon glyphicon-hamburger"></i>
-                                {% trans 'Formularze' %}
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                <i class="glyphicon glyphicon-globe"></i>
-                                {% trans 'Dostępne języki' %}
-                            </a>
-                        </li>
-                    </ul>
+            </div>
+            <div id="page-content-wrapper">
+                <div class="container-fluid">
+                    {% block content %}
+                    {% endblock %}
                 </div>
-            </nav>
-            {% block content %}
-            {% endblock %}
+            </div>
         </div>
         <script src="{% static "dynforms/jquery/jquery.js" %}"></script>
         <script src="{% static "dynforms/bootstrap/js/bootstrap.js" %}"></script>

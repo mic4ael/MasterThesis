@@ -15,45 +15,7 @@
 {% endblock %}
 
 {% block content %}
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="navbar-header">
-            <a href="" class="navbar-brand">{% trans 'Strona główna' %}</a>
-        </div>
-        <ul class="nav navbar-right top-nav">
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <i class="glyphicon glyphicon-user"></i>
-                    {{ request.user.get_full_name }}
-                    <b class="caret"></b>
-                </a>
-                <ul class="dropdown-menu">
-                    <li>
-                        <a href="#">
-                            <i class="glyphicon glyphicon-cog"></i>
-                            {% trans 'Ustawienia' %}
-                        </a>
-                    </li>
-                    <li>
-                        <a href="{% url 'logout' %}">
-                            <i class="glyphicon glyphicon-off"></i>
-                            {% trans 'Wyloguj się' %}
-                        </a>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-        <div class="collapse navbar-collapse navbar-ex1-collapse">
-            <ul class="nav navbar-nav side-nav">
-                <li class="active">
-                    <a href="#">
-                        <i class="glyphicon glyphicon-home"></i>
-                        {% trans 'Formularze' %}
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </nav>
     <div class="container-fluid">
-        Test
+
     </div>
 {% endblock %}

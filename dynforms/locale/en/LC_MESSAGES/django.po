@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-24 16:21+0200\n"
+"POT-Creation-Date: 2017-04-24 16:48+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -24,29 +24,33 @@ msgid "Nazwa użytkownika jest już zajęta"
 msgstr "Username must be unique"
 
 #: dynforms/templates/dynforms/home.html:8
-#: dynforms/templates/dynforms/home.html:20
+#: dynforms/templates/dynforms/layout_base.html:25
 #, fuzzy
 #| msgid "Strona logowania"
 msgid "Strona główna"
 msgstr "Home"
 
-#: dynforms/templates/dynforms/home.html:33
+#: dynforms/templates/dynforms/layout_base.html:9
+msgid "Dynamiczne formularze"
+msgstr "Dynamic forms"
+
+#: dynforms/templates/dynforms/layout_base.html:38
 msgid "Ustawienia"
 msgstr "Settings"
 
-#: dynforms/templates/dynforms/home.html:39
+#: dynforms/templates/dynforms/layout_base.html:44
 #, fuzzy
 #| msgid "Zaloguj się"
 msgid "Wyloguj się"
 msgstr "Log out"
 
-#: dynforms/templates/dynforms/home.html:50
+#: dynforms/templates/dynforms/layout_base.html:55
 msgid "Formularze"
 msgstr "Forms"
 
-#: dynforms/templates/dynforms/layout_base.html:9
-msgid "Dynamiczne formularze"
-msgstr "Dynamic forms"
+#: dynforms/templates/dynforms/layout_base.html:61
+msgid "Dostępne języki"
+msgstr "Available languages"
 
 #: dynforms/templates/dynforms/login.html:8
 msgid "Strona logowania"

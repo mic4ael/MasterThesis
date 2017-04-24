@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-24 16:48+0200\n"
+"POT-Creation-Date: 2017-04-24 18:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,94 +18,84 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: dynforms/forms.py:22
-#, fuzzy
-#| msgid "Nazwa uzytkownika"
 msgid "Nazwa użytkownika jest już zajęta"
-msgstr "Username must be unique"
+msgstr ""
 
 #: dynforms/templates/dynforms/home.html:8
-#: dynforms/templates/dynforms/layout_base.html:25
-#, fuzzy
-#| msgid "Strona logowania"
 msgid "Strona główna"
-msgstr "Home"
+msgstr ""
+
+#: dynforms/templates/dynforms/languages.html:8
+#: dynforms/templates/dynforms/layout_base.html:41
+msgid "Dostępne języki"
+msgstr ""
 
 #: dynforms/templates/dynforms/layout_base.html:9
 msgid "Dynamiczne formularze"
-msgstr "Dynamic forms"
+msgstr ""
 
-#: dynforms/templates/dynforms/layout_base.html:38
-msgid "Ustawienia"
-msgstr "Settings"
-
-#: dynforms/templates/dynforms/layout_base.html:44
-#, fuzzy
-#| msgid "Zaloguj się"
-msgid "Wyloguj się"
-msgstr "Log out"
-
-#: dynforms/templates/dynforms/layout_base.html:55
+#: dynforms/templates/dynforms/layout_base.html:34
 msgid "Formularze"
-msgstr "Forms"
+msgstr ""
 
-#: dynforms/templates/dynforms/layout_base.html:61
-msgid "Dostępne języki"
-msgstr "Available languages"
+#: dynforms/templates/dynforms/layout_base.html:47
+msgid "Ustawienia"
+msgstr ""
+
+#: dynforms/templates/dynforms/layout_base.html:53
+msgid "Wyloguj się"
+msgstr ""
 
 #: dynforms/templates/dynforms/login.html:8
 msgid "Strona logowania"
-msgstr "Login page"
+msgstr ""
 
-#: dynforms/templates/dynforms/login.html:24
+#: dynforms/templates/dynforms/login.html:22
 msgid "Proszę się zalogować"
-msgstr "Please log in"
+msgstr ""
 
-#: dynforms/templates/dynforms/login.html:29
-#: dynforms/templates/dynforms/login.html:32
-#: dynforms/templates/dynforms/register.html:28
-#: dynforms/templates/dynforms/register.html:32
-#, fuzzy
-#| msgid "Nazwa uzytkownika"
+#: dynforms/templates/dynforms/login.html:27
+#: dynforms/templates/dynforms/login.html:30
+#: dynforms/templates/dynforms/register.html:26
+#: dynforms/templates/dynforms/register.html:30
 msgid "Nazwa użytkownika"
-msgstr "Username"
+msgstr ""
 
+#: dynforms/templates/dynforms/login.html:40
 #: dynforms/templates/dynforms/login.html:42
-#: dynforms/templates/dynforms/login.html:44
-#: dynforms/templates/dynforms/register.html:85
-#: dynforms/templates/dynforms/register.html:89
+#: dynforms/templates/dynforms/register.html:83
+#: dynforms/templates/dynforms/register.html:87
 msgid "Hasło"
-msgstr "Password"
+msgstr ""
 
-#: dynforms/templates/dynforms/login.html:53
+#: dynforms/templates/dynforms/login.html:51
 msgid "Zaloguj się"
-msgstr "Log in"
+msgstr ""
 
-#: dynforms/templates/dynforms/login.html:56
-#: dynforms/templates/dynforms/register.html:24
+#: dynforms/templates/dynforms/login.html:54
+#: dynforms/templates/dynforms/register.html:22
 msgid "Utwórz konto"
-msgstr "Create an account"
+msgstr ""
 
 #: dynforms/templates/dynforms/register.html:8
 msgid "Rejestracja"
-msgstr "Registration"
+msgstr ""
 
-#: dynforms/templates/dynforms/register.html:43
-#: dynforms/templates/dynforms/register.html:47
+#: dynforms/templates/dynforms/register.html:41
+#: dynforms/templates/dynforms/register.html:45
 msgid "Adres mailowy"
-msgstr "E-mail address"
+msgstr ""
 
-#: dynforms/templates/dynforms/register.html:57
-#: dynforms/templates/dynforms/register.html:61
+#: dynforms/templates/dynforms/register.html:55
+#: dynforms/templates/dynforms/register.html:59
 msgid "Imię"
-msgstr "First name"
+msgstr ""
 
-#: dynforms/templates/dynforms/register.html:71
-#: dynforms/templates/dynforms/register.html:75
+#: dynforms/templates/dynforms/register.html:69
+#: dynforms/templates/dynforms/register.html:73
 msgid "Nazwisko"
-msgstr "Last name"
+msgstr ""
 
-#: dynforms/templates/dynforms/register.html:98
-#, fuzzy
-#| msgid "Zaloguj się"
+#: dynforms/templates/dynforms/register.html:96
 msgid "Zarejestruj się"
-msgstr "Register"
+msgstr ""

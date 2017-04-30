@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-04-24 18:08+0200\n"
+"POT-Creation-Date: 2017-04-26 14:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,8 +26,25 @@ msgid "Strona główna"
 msgstr ""
 
 #: dynforms/templates/dynforms/languages.html:8
+#: dynforms/templates/dynforms/languages.html:19
 #: dynforms/templates/dynforms/layout_base.html:41
 msgid "Dostępne języki"
+msgstr ""
+
+#: dynforms/templates/dynforms/languages.html:23
+msgid "Lista obecnie dostępnych języków formularzy"
+msgstr ""
+
+#: dynforms/templates/dynforms/languages.html:29
+msgid "Kod"
+msgstr ""
+
+#: dynforms/templates/dynforms/languages.html:30
+msgid "Nazwa"
+msgstr ""
+
+#: dynforms/templates/dynforms/languages.html:43
+msgid "Brak zdefiniowanych języków"
 msgstr ""
 
 #: dynforms/templates/dynforms/layout_base.html:9

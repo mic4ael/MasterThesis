@@ -1,6 +1,6 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic.base import TemplateView, View
@@ -52,8 +52,10 @@ class RegistrationView(TemplateView):
     def post(self, request):
         form = RegistrationForm(request.POST)
         if form.is_valid():
-            new_user = User.objects.create_user(**form.cleaned_data)
-            new_user.save()
+            translator_account = User.objects.create_user(**form.cleaned_data)
+            permission_to_translate = Permission.objects.get(codename='can_translate_forms')
+            translator_account.user_permissions.add(permission_to_translate)
+            translator_account.save()
             return HttpResponseRedirect(settings.LOGIN_REDIRECT_URL)
         return render(request, self.template_name, {'form': form})
 

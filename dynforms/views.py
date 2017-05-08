@@ -1,8 +1,9 @@
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User, Permission
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
 from django.views.generic.base import TemplateView, View
 
 from dynforms.forms import LoginForm, RegistrationForm
@@ -64,10 +65,33 @@ class HomeView(LoginRequiredMixin, TemplateView):
     template_name = 'dynforms/home.html'
 
 
-class LanguagesView(LoginRequiredMixin, TemplateView):
+def _login_url(self):
+    if self.request.user.is_authenticated:
+        return reverse('home')
+    else:
+        return reverse('login')
+
+
+class LanguagesView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
     template_name = 'dynforms/languages.html'
+    redirect_field_name = None
+
+    def test_func(self):
+        return self.request.user.is_superuser
 
     def get_context_data(self, **kwargs):
         context = super(LanguagesView, self).get_context_data(**kwargs)
         context['languages'] = Language.objects.all()
         return context
+
+    login_url = property(_login_url)
+
+
+class FormsView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
+    template_name = 'dynforms/forms.html'
+    redirect_field_name = None
+
+    def test_func(self):
+        return self.request.user.is_superuser
+
+    login_url = property(_login_url)

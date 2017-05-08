@@ -28,19 +28,24 @@
                             {{ request.user.get_full_name }}
                         </a>
                     </li>
-                    <li>
-                        <a href="#">
-                            <i class="glyphicon glyphicon-menu-hamburger"></i>
-                            {% trans 'Formularze' %}
-                        </a>
-                    </li>
-                    {% url 'languages' as languages_url %}
-                    <li class="{% if request.get_full_path == languages_url %}active{% endif %}">
-                        <a href="{{ languages_url }}">
-                            <i class="glyphicon glyphicon-globe"></i>
-                            {% trans 'Dostępne języki' %}
-                        </a>
-                    </li>
+                    {% if request.user.is_superuser %}
+                        {% url 'forms' as forms_url %}
+                        <li class="{% if request.get_full_path == forms_url %}active{% endif %}">
+                            <a href="{{ forms_url }}">
+                                <i class="glyphicon glyphicon-list-alt"></i>
+                                {% trans 'Formularze' %}
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if request.user.is_superuser %}
+                        {% url 'languages' as languages_url %}
+                        <li class="{% if request.get_full_path == languages_url %}active{% endif %}">
+                            <a href="{{ languages_url }}">
+                                <i class="glyphicon glyphicon-globe"></i>
+                                {% trans 'Dostępne języki' %}
+                            </a>
+                        </li>
+                    {% endif %}
                     <li>
                         <a href="#">
                             <i class="glyphicon glyphicon-cog"></i>

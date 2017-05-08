@@ -18,9 +18,9 @@
         <div id="container">
             <form class="form-signup" method="POST">
                 {% csrf_token %}
-                <h2 class="form-signup-heading">
-                    {% trans 'Utwórz konto' %}
-                </h2>
+                <h3 class="form-signup-heading">
+                    {% trans 'Utwórz konto tłumacza' %}
+                </h3>
                 <div class="form-group {% if form.username.errors %}has-error{% endif %}">
                     <label for="username">
                         {% trans 'Nazwa użytkownika' %}

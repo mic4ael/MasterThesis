@@ -16,7 +16,7 @@ def add_admin_user(apps, schema_editor):
 
 def add_permission_to_translate(apps, schema_editor):
     unused_content_type = ContentType.objects.create(app_label='dynforms',
-                                                     model='user')
+                                                     model='unused')
     can_translate_permission = Permission.objects.create(name='Can translate forms',
                                                          content_type=unused_content_type,
                                                          codename='can_translate_forms')

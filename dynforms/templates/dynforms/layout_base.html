@@ -30,12 +30,20 @@
                             {{ request.user.get_full_name }}
                         </a>
                     </li>
+                    {% if perms.dynforms.can_translate_forms or request.user.is_superuser %}
+                        <li class="">
+                            <a href="#">
+                                <i class="glyphicon glyphicon-list-alt"></i>
+                                {% trans 'Formularze do tłumaczenia' %}
+                            </a>
+                        </li>
+                    {% endif %}
                     {% if request.user.is_superuser %}
                         {% url 'forms' as forms_url %}
                         <li class="{% if request.get_full_path == forms_url %}active{% endif %}">
                             <a href="{{ forms_url }}">
                                 <i class="glyphicon glyphicon-list-alt"></i>
-                                {% trans 'Formularze' %}
+                                {% trans 'Szablony formularzy' %}
                             </a>
                         </li>
                     {% endif %}

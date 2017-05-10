@@ -20,7 +20,7 @@
     </div>
     <div class="panel panel-default">
         <div class="panel-heading">
-            {% trans 'Lista obecnie dostępnych języków formularzy' %}
+            {% trans 'Lista zdefiniowanych języków w jakich można tworzyć formularze' %}
         </div>
         <table class="table table-bordered languages-list">
             <thead>
@@ -37,7 +37,6 @@
                         <td>{{ language.name }}</td>
                         <td class="action-buttons">
                             <span>
-                                <a href="#"><i class="glyphicon glyphicon-edit"></i></a>
                                 <a href="#"><i class="glyphicon glyphicon-remove"></i></a>
                             </span>
                         </td>
@@ -49,5 +48,27 @@
                 {% endfor %}
             </tbody>
         </table>
+    </div>
+    <div class="page-header">
+        <h1>{% trans 'Zdefiniuj nowy język' %}</h1>
+    </div>
+    <div>
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="code">{% trans 'Kod języka' %}</label>
+                <input id="code" type="text" name="code" class="form-control"
+                       maxlength="20"
+                       required>
+            </div>
+            <div class="form-group">
+                <label for="name">{% trans 'Nazwa języka' %}</label>
+                <input id="name" type="text" name="name" class="form-control"
+                       maxlength="100"
+                       required>
+            </div>
+
+            <button class="btn btn-primary">{% trans 'Dodaj nowy język' %}</button>
+        </form>
     </div>
 {% endblock %}

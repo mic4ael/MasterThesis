@@ -6,7 +6,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic.base import TemplateView, View
 
-from dynforms.forms import LoginForm, RegistrationForm
+from dynforms.forms import LoginForm, RegistrationForm, NewLanguageForm
 from dynforms.models import Language
 from masterthesis import settings
 
@@ -83,6 +83,15 @@ class LanguagesView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
         context = super(LanguagesView, self).get_context_data(**kwargs)
         context['languages'] = Language.objects.all()
         return context
+
+    def post(self, request):
+        form = NewLanguageForm(request.POST)
+        if form.is_valid():
+            Language.objects.create(**form.cleaned_data).save()
+        return HttpResponseRedirect(reverse('languages'))
+
+    def delete(self, request):
+        pass
 
     login_url = property(_login_url)
 

@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-from django.core.validators import EmailValidator
+from django.core.validators import EmailValidator, MaxLengthValidator
 from django.utils.translation import ugettext as _
 
 
@@ -21,3 +21,8 @@ class RegistrationForm(forms.Form):
         if User.objects.filter(username=self.cleaned_data['username']).exists():
             raise ValidationError(_('Nazwa użytkownika jest już zajęta'))
         return self.cleaned_data['username']
+
+
+class NewLanguageForm(forms.Form):
+    code = forms.CharField(required=True, validators=[MaxLengthValidator(20)])
+    name = forms.CharField(required=True, validators=[MaxLengthValidator(100)])

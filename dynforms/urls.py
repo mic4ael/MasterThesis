@@ -10,4 +10,6 @@ urlpatterns = [
 
     url(r'^home$', views.HomeView.as_view(), name='home'),
     url(r'^languages$', views.LanguagesView.as_view(), name='languages'),
+    url(r'^forms$', views.FormsView.as_view(), name='forms'),
+    url(r'^forms/new$', views.NewFormsView.as_view(), name='new_forms_template')
 ]

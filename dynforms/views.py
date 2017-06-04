@@ -6,8 +6,9 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic.base import TemplateView, View
 
-from dynforms.forms import LoginForm, RegistrationForm, NewLanguageForm
-from dynforms.models import Language
+from dynforms.forms import (LoginForm, RegistrationForm, NewLanguageForm,
+                            NewFormTemplateForm, NewFormTemplateForm)
+from dynforms.models import Language, FormModel
 from masterthesis import settings
 
 
@@ -72,12 +73,17 @@ def _login_url(self):
         return reverse('login')
 
 
-class LanguagesView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
-    template_name = 'dynforms/languages.html'
+class UserIsSuperAdminTest(UserPassesTestMixin):
     redirect_field_name = None
 
     def test_func(self):
         return self.request.user.is_superuser
+
+    login_url = property(_login_url)
+
+
+class LanguagesView(LoginRequiredMixin, UserIsSuperAdminTest, TemplateView):
+    template_name = 'dynforms/languages.html'
 
     def get_context_data(self, **kwargs):
         context = super(LanguagesView, self).get_context_data(**kwargs)
@@ -93,14 +99,26 @@ class LanguagesView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
     def delete(self, request):
         pass
 
-    login_url = property(_login_url)
 
-
-class FormsView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
+class FormsView(LoginRequiredMixin, UserIsSuperAdminTest, TemplateView):
     template_name = 'dynforms/forms.html'
-    redirect_field_name = None
 
-    def test_func(self):
-        return self.request.user.is_superuser
+    def get_context_data(self, **kwargs):
+        context = super(FormsView, self).get_context_data(**kwargs)
+        context['forms'] = FormModel.objects.all()
+        return context
 
-    login_url = property(_login_url)
+
+class NewFormsView(LoginRequiredMixin, UserIsSuperAdminTest, TemplateView):
+    template_name = 'dynforms/create_form.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(NewFormsView, self).get_context_data(**kwargs)
+        context['form'] = NewFormTemplateForm()
+        return context
+
+    def post(self, request):
+        form = NewFormTemplateForm(request.POST)
+        if form.is_valid():
+            FormModel.objects.create(**form.cleaned_data).save()
+        return HttpResponseRedirect(reverse('forms'))

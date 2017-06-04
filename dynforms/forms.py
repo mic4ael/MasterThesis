@@ -26,3 +26,13 @@ class RegistrationForm(forms.Form):
 class NewLanguageForm(forms.Form):
     code = forms.CharField(required=True, validators=[MaxLengthValidator(20)])
     name = forms.CharField(required=True, validators=[MaxLengthValidator(100)])
+
+
+class NewFormTemplateForm(forms.Form):
+    name = forms.CharField(label=_('Nazwa'), required=True, validators=[MaxLengthValidator(100)],
+                           widget=forms.TextInput(attrs={'class': 'form-control'}))
+    description = forms.CharField(label=_('Opis'), widget=forms.Textarea(attrs={'class': 'form-control'}),
+                                  required=True, validators=[MaxLengthValidator(1000)])
+    max_submissions = forms.IntegerField(label=_('Maksymalna liczba zgłoszeń'), initial=0,
+                                         widget=forms.NumberInput(attrs={'class': 'form-control'}),
+                                         required=False)

@@ -1,0 +1,57 @@
+{% extends 'dynforms/layout_base.html' %}
+
+{% load i18n %}
+{% load static %}
+
+
+{% block title %}
+    {% trans 'Formularze' %}
+{% endblock %}
+
+{% block styles %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css"
+          href="{% static "dynforms/custom/css/forms.css" %}">
+{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <h1>{% trans 'Formularze' %}</h1>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            {% trans 'Zdefiniowane formularze' %}
+        </div>
+        <table class="table table-bordered forms-list">
+            <thead>
+                <tr>
+                    <th>{% trans 'Id' %}</th>
+                    <th>{% trans 'Nazwa' %}</th>
+                    <th>{% trans 'Maks. liczba zgłoszeń' %}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for form in forms %}
+                    <tr>
+                        <td>{{ form.id }}</td>
+                        <td>{{ form.name }}</td>
+                        <td>
+                            {% if form.max_submissions == 0 %}
+                                {% trans 'Nieograniczona' %}
+                            {% else %}
+                                {{ form.max_submissions }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3">{% trans 'Brak zdefiniowanych formularzy' %}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <a href="{% url 'new_forms_template' %}" class="btn btn-primary">
+        {% trans 'Zdefiniuj nowy formularz' %}
+    </a>
+{% endblock %}

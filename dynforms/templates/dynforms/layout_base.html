@@ -40,7 +40,8 @@
                     {% endif %}
                     {% if request.user.is_superuser %}
                         {% url 'forms' as forms_url %}
-                        <li class="{% if request.get_full_path == forms_url %}active{% endif %}">
+                        {% url 'new_forms_template' as new_forms_url %}
+                        <li class="{% if request.get_full_path == forms_url or request.get_full_path == new_forms_url%}active{% endif %}">
                             <a href="{{ forms_url }}">
                                 <i class="glyphicon glyphicon-list-alt"></i>
                                 {% trans 'Szablony formularzy' %}
@@ -56,12 +57,6 @@
                             </a>
                         </li>
                     {% endif %}
-                    <li>
-                        <a href="#">
-                            <i class="glyphicon glyphicon-cog"></i>
-                            {% trans 'Ustawienia' %}
-                        </a>
-                    </li>
                     <li>
                         <a href="{% url 'logout' %}">
                             <i class="glyphicon glyphicon-off"></i>

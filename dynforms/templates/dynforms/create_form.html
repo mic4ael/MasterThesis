@@ -1,0 +1,38 @@
+{% extends 'dynforms/layout_base.html' %}
+
+{% load i18n %}
+{% load static %}
+
+
+{% block title %}
+    {% trans 'Nowy szablon formularzy' %}
+{% endblock %}
+
+{% block styles %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css"
+          href="">
+{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <h1>{% trans 'Nowy szablon' %}</h1>
+    </div>
+    <div class="panel">
+        <form method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group {% if field.errors %}has-error{% endif %}">
+                    {{ field.label_tag }} {% if field.field.required %}*{% endif %}
+                    {{ field }}
+                    {% if field.errors %}
+                        {% for error in field.errors %}
+                            <div class="alert alert-danger">{{ error }}</div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <input type="submit" class="btn btn-primary" value="{% trans 'Utwórz' %}">
+        </form>
+    </div>
+{% endblock %}

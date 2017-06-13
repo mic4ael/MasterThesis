@@ -62,13 +62,9 @@ class RegistrationView(TemplateView):
         return render(request, self.template_name, {'form': form})
 
 
-class HomeView(LoginRequiredMixin, TemplateView):
-    template_name = 'dynforms/home.html'
-
-
 def _login_url(self):
     if self.request.user.is_authenticated:
-        return reverse('home')
+        return reverse('forms')
     else:
         return reverse('login')
 
@@ -120,7 +116,11 @@ class NewFormsView(LoginRequiredMixin, UserIsSuperAdminTest, TemplateView):
     def post(self, request):
         form = NewFormTemplateForm(request.POST)
         if form.is_valid():
-            FormModel.objects.create(**form.cleaned_data).save()
+            languages = form.cleaned_data.pop('languages')
+            new_form = FormModel.objects.create(**form.cleaned_data)
+            for lang in languages:
+                new_form.languages.add(lang)
+            new_form.save()
             return HttpResponseRedirect(reverse('forms'))
         return render(request, self.template_name, {'form': form})
 

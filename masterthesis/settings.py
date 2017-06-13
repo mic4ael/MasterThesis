@@ -128,6 +128,6 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGIN_REDIRECT_URL = '/dynforms/home'
+LOGIN_REDIRECT_URL = '/dynforms/forms'
 LOGIN_URL = '/dynforms/login'
 LOGOUT_REDIRECT_URL = '/dynforms/login'

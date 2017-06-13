@@ -9,6 +9,6 @@ class Language(models.Model):
 class FormModel(models.Model):
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=1000)
-    # languages = None
+    languages = models.ManyToManyField(Language, related_name='+')
     max_submissions = models.PositiveIntegerField(default=0)
 

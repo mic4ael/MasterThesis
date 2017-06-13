@@ -15,7 +15,5 @@
             console.debug('Wybrano niewspierany typ pola');
             return;
         }
-
-
     });
 })();

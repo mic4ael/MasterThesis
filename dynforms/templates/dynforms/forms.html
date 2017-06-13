@@ -34,7 +34,11 @@
                 {% for form in forms %}
                     <tr>
                         <td>{{ form.id }}</td>
-                        <td>{{ form.name }}</td>
+                        <td>
+                            <a href="{% url 'forms_details' forms_id=form.id %}">
+                                {{ form.name }}
+                            </a>
+                        </td>
                         <td>
                             {% if form.max_submissions == 0 %}
                                 {% trans 'Nieograniczona' %}

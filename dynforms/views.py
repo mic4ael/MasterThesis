@@ -124,3 +124,6 @@ class NewFormsView(LoginRequiredMixin, UserIsSuperAdminTest, TemplateView):
             return HttpResponseRedirect(reverse('forms'))
         return render(request, self.template_name, {'form': form})
 
+
+class FormsDetails(LoginRequiredMixin, UserIsSuperAdminTest, TemplateView):
+    template_name = 'dynforms/forms_details.html'

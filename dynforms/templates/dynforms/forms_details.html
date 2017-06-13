@@ -1,0 +1,21 @@
+{% extends 'dynforms/layout_base.html' %}
+
+{% load i18n %}
+{% load static %}
+
+
+{% block title %}
+    {% trans 'Edycja formularzu' %}
+{% endblock %}
+
+{% block styles %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css"
+          href="{% static "dynforms/custom/css/forms.css" %}">
+{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <h1>{% trans 'Edytuj formularz' %}</h1>
+    </div>
+{% endblock %}

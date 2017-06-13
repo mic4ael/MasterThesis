@@ -45,7 +45,8 @@
                     {% if request.user.is_superuser %}
                         {% url 'forms' as forms_url %}
                         {% url 'new_forms_template' as new_forms_url %}
-                        <li class="{% if request.get_full_path == forms_url or request.get_full_path == new_forms_url%}active{% endif %}">
+                        {% url 'forms_details' forms_id=form_model.id as forms_details_url %}
+                        <li class="{% if request.get_full_path == forms_url or request.get_full_path == new_forms_url or request.get_full_path == forms_details_url %}active{% endif %}">
                             <a href="{{ forms_url }}">
                                 <i class="glyphicon glyphicon-list-alt"></i>
                                 {% trans 'Szablony formularzy' %}

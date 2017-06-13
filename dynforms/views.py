@@ -125,5 +125,10 @@ class NewFormsView(LoginRequiredMixin, UserIsSuperAdminTest, TemplateView):
         return render(request, self.template_name, {'form': form})
 
 
-class FormsDetails(LoginRequiredMixin, UserIsSuperAdminTest, TemplateView):
+class FormsDetailsView(LoginRequiredMixin, UserIsSuperAdminTest, TemplateView):
     template_name = 'dynforms/forms_details.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(FormsDetailsView, self).get_context_data(**kwargs)
+        context['form_model'] = FormModel.objects.get(pk=self.kwargs['forms_id'])
+        return context

@@ -12,5 +12,5 @@ urlpatterns = [
     url(r'^languages$', views.LanguagesView.as_view(), name='languages'),
     url(r'^forms$', views.FormsView.as_view(), name='forms'),
     url(r'^forms/new$', views.NewFormsView.as_view(), name='new_forms_template'),
-    url(r'^forms/(?P<forms_id>[0-9]+)$$', views.FormsDetails.as_view(), name='forms_details')
+    url(r'^forms/(?P<forms_id>[0-9]+)$$', views.FormsDetailsView.as_view(), name='forms_details')
 ]

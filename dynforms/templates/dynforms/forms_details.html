@@ -8,6 +8,11 @@
     {% trans 'Edycja formularzu' %}
 {% endblock %}
 
+{% block scripts %}
+    {{ block.super }}
+    <script src="{% static "dynforms/vuejs/vue.js" %}"></script>
+{% endblock %}
+
 {% block styles %}
     {{ block.super }}
     <link rel="stylesheet" type="text/css"
@@ -16,6 +21,66 @@
 
 {% block content %}
     <div class="page-header">
-        <h1>{% trans 'Edytuj formularz' %}</h1>
+        <h1>
+            {% trans 'Edytuj formularz' %} <small> {{ form_model.name }}</small>
+        </h1>
     </div>
+    <div class="row">
+        <div class="col-sm-3 forms-fields">
+            <div class="btn-group" role="group">
+                <button type="button" class="new-field btn btn-block btn-default"
+                        data-field-type="text">
+                    <i class="glyphicon glyphicon-text-height"></i>
+                    {% trans 'Pole tekstowe' %}
+                </button>
+            </div>
+            <div class="btn-group" role="group">
+                <button type="button" class="new-field btn btn-block btn-default"
+                        data-field-type="number">
+                    <i class="glyphicon glyphicon-bitcoin"></i>
+                    {% trans 'Pole numeryczne' %}
+                </button>
+            </div>
+            <div class="btn-group" role="group">
+                <button type="button" class="new-field btn btn-block btn-default"
+                        data-field-type="mail">
+                    <i class="glyphicon glyphicon-envelope"></i>
+                    {% trans 'Adres mailowy' %}
+                </button>
+            </div>
+            <div class="btn-group" role="group">
+                <button type="button" class="new-field btn btn-block btn-default"
+                        data-field-type="date">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                    {% trans 'Pole z datą' %}
+                </button>
+            </div>
+            <div class="btn-group" role="group">
+                <button type="button" class="new-field btn btn-block btn-default"
+                        data-field-type="checkbox">
+                    <i class="glyphicon glyphicon-check"></i>
+                    {% trans 'Pole wyboru' %}
+                </button>
+            </div>
+            <div class="btn-group" role="group">
+                <button type="button" class="new-field btn btn-block btn-default"
+                        data-field-type="paragraph">
+                    <i class="glyphicon glyphicon-header"></i>
+                    {% trans 'Blok tekstu' %}
+                </button>
+            </div>
+            <div class="btn-group" role="group">
+                <button type="button" class="new-field btn btn-block btn-default"
+                        data-field-type="select">
+                    <i class="glyphicon glyphicon-list"></i>
+                    {% trans 'Lista wyboru' %}
+                </button>
+            </div>
+        </div>
+        <div class="col-sm-7 forms-preview">
+            <h2 class="forms-preview-header">{{ form_model.name }}</h2>
+        </div>
+        <button class="btn btn-primary">{% trans '' %}</button>
+    </div>
+    <script src="{% static 'dynforms/custom/js/forms_builder.js' %}"></script>
 {% endblock %}

@@ -1,3 +1,18 @@
 .form-group .alert-danger {
     margin-top: 5px;
 }
+
+.forms-fields .btn-group {
+    margin: 5px 0;
+    min-width: 150px;
+}
+
+.forms-preview {
+    margin: 5px 0;
+    background-color: #EEE;
+    border-radius: 4px;
+}
+
+.forms-preview > .forms-preview-header {
+    border-bottom: 1px solid #ccc;
+}

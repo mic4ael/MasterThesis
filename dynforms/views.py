@@ -121,4 +121,6 @@ class NewFormsView(LoginRequiredMixin, UserIsSuperAdminTest, TemplateView):
         form = NewFormTemplateForm(request.POST)
         if form.is_valid():
             FormModel.objects.create(**form.cleaned_data).save()
-        return HttpResponseRedirect(reverse('forms'))
+            return HttpResponseRedirect(reverse('forms'))
+        return render(request, self.template_name, {'form': form})
+

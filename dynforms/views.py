@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.views.generic.base import TemplateView, View
 
 from dynforms.forms import (LoginForm, RegistrationForm, NewLanguageForm,
-                            NewFormTemplateForm, NewFormTemplateForm)
+                            NewFormTemplateForm)
 from dynforms.models import Language, FormModel
 from masterthesis import settings
 

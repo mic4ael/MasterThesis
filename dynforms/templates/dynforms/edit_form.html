@@ -32,7 +32,8 @@
                     {% endif %}
                 </div>
             {% endfor %}
-            <input type="submit" class="btn btn-primary" value="{% trans 'Zapisz' %}">
+            <input type="submit" class="btn btn-success" value="{% trans 'Zapisz' %}">
+            <a href="{% url 'forms' %}" class="btn btn-primary">{% trans 'Powrót' %}</a>
         </form>
     </div>
 {% endblock %}

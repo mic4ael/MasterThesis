@@ -5,7 +5,7 @@
 
 
 {% block title %}
-    {% trans 'Nowy szablon formularzy' %}
+    {% trans 'Edytuj szablon formularzy' %}
 {% endblock %}
 
 {% block styles %}
@@ -16,7 +16,7 @@
 
 {% block content %}
     <div class="page-header">
-        <h1>{% trans 'Nowy szablon' %}</h1>
+        <h1>{% trans 'Edytuj szablon' %}</h1>
     </div>
     <div class="panel">
         <form method="POST">
@@ -32,8 +32,7 @@
                     {% endif %}
                 </div>
             {% endfor %}
-            <input type="submit" class="btn btn-success" value="{% trans 'Utwórz' %}">
-            <a href="{% url 'forms' %}" class="btn btn-primary">{% trans 'Powrót' %}</a>
+            <input type="submit" class="btn btn-primary" value="{% trans 'Zapisz' %}">
         </form>
     </div>
 {% endblock %}

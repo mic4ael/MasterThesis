@@ -81,5 +81,6 @@
             <h2 class="forms-preview-header">{{ form_model.name }}</h2>
         </div>
     </div>
+    <a href="{% url 'forms' %}" class="btn btn-primary">{% trans 'Powrót' %}</a>
     <script src="{% static 'dynforms/custom/js/forms_builder.js' %}"></script>
 {% endblock %}

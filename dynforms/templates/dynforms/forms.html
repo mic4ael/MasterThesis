@@ -28,6 +28,9 @@
                     <th>{% trans 'Id' %}</th>
                     <th>{% trans 'Nazwa' %}</th>
                     <th>{% trans 'Maks. liczba zgłoszeń' %}</th>
+                    <th>{% trans 'Liczba zgłoszeń' %}</th>
+                    <th>{% trans 'Dostępny w językach' %}</th>
+                    <th style="width: 6%;"></th>
                 </tr>
             </thead>
             <tbody>
@@ -35,7 +38,7 @@
                     <tr>
                         <td>{{ form.id }}</td>
                         <td>
-                            <a href="{% url 'forms_details' forms_id=form.id %}">
+                            <a href="{% url 'manage_form' forms_id=form.id %}">
                                 {{ form.name }}
                             </a>
                         </td>
@@ -46,10 +49,24 @@
                                 {{ form.max_submissions }}
                             {% endif %}
                         </td>
+                        <td>0</td>
+                        <td>
+                            {{ form.languages_names|join:", " }}
+                        </td>
+                        <td>
+                            <a href="#" class="remove-form"
+                               data-href="{% url 'manage_form' forms_id=form.id %}"
+                               data-method="DELETE">
+                                <i class="glyphicon glyphicon-trash" style="color: red;"></i>
+                            </a>
+                            <a href="{% url 'forms_template' forms_id=form.id %}" style="float: right; padding-right: 10px;">
+                                <i class="glyphicon glyphicon-edit"></i>
+                            </a>
+                        </td>
                     </tr>
                 {% empty %}
                     <tr>
-                        <td colspan="3">{% trans 'Brak zdefiniowanych formularzy' %}</td>
+                        <td colspan="6">{% trans 'Brak zdefiniowanych formularzy' %}</td>
                     </tr>
                 {% endfor %}
             </tbody>
@@ -58,4 +75,27 @@
     <a href="{% url 'new_forms_template' %}" class="btn btn-primary">
         {% trans 'Zdefiniuj nowy formularz' %}
     </a>
+
+    <script>
+        (function() {
+            $('.forms-list .remove-form').on('click', function(evt) {
+                evt.preventDefault();
+
+                var $this = $(this),
+                    csrfToken = "{{ csrf_token }}";
+                $.ajax({
+                    url: $this.data('href'),
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader('X-CSRFToken', csrfToken);
+                    },
+                    method: $this.data('method'),
+                    success: function(data) {
+                        if (data.success) {
+                            $this.closest('tr').remove();
+                        }
+                    }
+                })
+            });
+        })();
+    </script>
 {% endblock %}

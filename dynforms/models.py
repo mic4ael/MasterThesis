@@ -12,3 +12,6 @@ class FormModel(models.Model):
     languages = models.ManyToManyField(Language, related_name='+')
     max_submissions = models.PositiveIntegerField(default=0)
 
+    def languages_names(self):
+        return [lang.name for lang in self.languages.all()]
+

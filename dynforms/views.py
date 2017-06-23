@@ -1,8 +1,8 @@
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User, Permission
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.http import HttpResponseRedirect, JsonResponse
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views.generic.base import TemplateView, View
 
@@ -125,10 +125,40 @@ class NewFormsView(LoginRequiredMixin, UserIsSuperAdminTest, TemplateView):
         return render(request, self.template_name, {'form': form})
 
 
-class FormsDetailsView(LoginRequiredMixin, UserIsSuperAdminTest, TemplateView):
-    template_name = 'dynforms/forms_details.html'
+class EditFormsView(LoginRequiredMixin, UserIsSuperAdminTest, TemplateView):
+    template_name = 'dynforms/edit_form.html'
 
     def get_context_data(self, **kwargs):
-        context = super(FormsDetailsView, self).get_context_data(**kwargs)
+        context = super(EditFormsView, self).get_context_data(**kwargs)
+        forms_model = FormModel.objects.get(pk=self.kwargs['forms_id'])
+        initial_data = {'name': forms_model.name, 'description': forms_model.description,
+                        'max_submissions': forms_model.max_submissions, 'languages': forms_model.languages.all()}
+        context['form'] = NewFormTemplateForm(initial=initial_data)
+        return context
+
+    def post(self, request, forms_id):
+        form = NewFormTemplateForm(request.POST)
+        if form.is_valid():
+            cleaned_data = form.cleaned_data
+            forms_model = FormModel.objects.get(pk=forms_id)
+            forms_model.name = cleaned_data['name']
+            forms_model.description = cleaned_data['description']
+            forms_model.max_submissions = cleaned_data['max_submissions']
+            forms_model.languages = cleaned_data['languages']
+            forms_model.save()
+            return HttpResponseRedirect(reverse('forms'))
+        return render(request, self.template_name, {'form': form})
+
+    def delete(self, request, forms_id):
+        forms_model = get_object_or_404(FormModel, pk=forms_id)
+        forms_model.delete()
+        return JsonResponse({'success': True})
+
+
+class FormsTemplateView(LoginRequiredMixin, UserIsSuperAdminTest, TemplateView):
+    template_name = 'dynforms/forms_template.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(FormsTemplateView, self).get_context_data(**kwargs)
         context['form_model'] = FormModel.objects.get(pk=self.kwargs['forms_id'])
         return context

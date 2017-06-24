@@ -1,3 +1,5 @@
+import json
+
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User, Permission
@@ -8,7 +10,7 @@ from django.views.generic.base import TemplateView, View
 
 from dynforms.forms import (LoginForm, RegistrationForm, NewLanguageForm,
                             NewFormTemplateForm)
-from dynforms.models import Language, FormModel
+from dynforms.models import Language, FormModel, FormField
 from masterthesis import settings
 
 
@@ -162,3 +164,23 @@ class FormsTemplateView(LoginRequiredMixin, UserIsSuperAdminTest, TemplateView):
         context = super(FormsTemplateView, self).get_context_data(**kwargs)
         context['form_model'] = FormModel.objects.get(pk=self.kwargs['forms_id'])
         return context
+
+    def post(self, request, forms_id):
+        fields = json.loads(request.POST['fields'])
+        form_model = get_object_or_404(FormModel, pk=forms_id)
+        response = []
+        for field in fields:
+            if field['id'] is None:
+                field_to_save = FormField()
+                field_to_save.form = form_model
+            else:
+                field_to_save = get_object_or_404(FormField, pk=field['id'])
+
+            field_to_save.field_type = field['type']
+            field_to_save.field_label = field['label']
+            field_to_save.field_placeholder = field.get('placeholder')
+            field_to_save.field_required = field.get('required', False)
+            field_to_save.save()
+            response.append(field_to_save.as_dict())
+
+        return JsonResponse({'success': True, 'fields': json.dumps(response)})

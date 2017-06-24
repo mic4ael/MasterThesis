@@ -2,10 +2,6 @@
     margin-top: 5px;
 }
 
-.forms-fields {
-    height: 300px;
-}
-
 .forms-fields .btn-group {
     margin: 5px 0;
     min-width: 150px;
@@ -13,7 +9,6 @@
 
 .forms-preview {
     margin: 5px 0;
-    background-color: #EEE;
     border-radius: 4px;
 }
 

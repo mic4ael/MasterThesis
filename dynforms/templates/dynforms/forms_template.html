@@ -25,62 +25,152 @@
             {% trans 'Edytuj formularz' %} <small> {{ form_model.name }}</small>
         </h1>
     </div>
-    <div class="row">
+    <div class="row forms-template" data-csrf-token="{{ csrf_token }}">
         <div class="col-sm-3 forms-fields">
             <div class="btn-group" role="group">
                 <button type="button" class="new-field btn btn-block btn-default"
-                        data-field-type="text">
+                        data-field-type="text"
+                        v-on:click="openNewFieldDialog">
                     <i class="glyphicon glyphicon-text-height"></i>
                     {% trans 'Pole tekstowe' %}
                 </button>
             </div>
+            <new-field-dialog field-type="text"></new-field-dialog>
             <div class="btn-group" role="group">
                 <button type="button" class="new-field btn btn-block btn-default"
-                        data-field-type="number">
+                        data-field-type="number"
+                        v-on:click="openNewFieldDialog">
                     <i class="glyphicon glyphicon-bitcoin"></i>
                     {% trans 'Pole numeryczne' %}
                 </button>
             </div>
+            <new-field-dialog field-type="number"></new-field-dialog>
             <div class="btn-group" role="group">
                 <button type="button" class="new-field btn btn-block btn-default"
-                        data-field-type="mail">
+                        data-field-type="mail"
+                        v-on:click="openNewFieldDialog">
                     <i class="glyphicon glyphicon-envelope"></i>
                     {% trans 'Adres mailowy' %}
                 </button>
             </div>
+            <new-field-dialog field-type="mail"></new-field-dialog>
             <div class="btn-group" role="group">
                 <button type="button" class="new-field btn btn-block btn-default"
-                        data-field-type="date">
+                        data-field-type="date"
+                        v-on:click="openNewFieldDialog">
                     <i class="glyphicon glyphicon-calendar"></i>
                     {% trans 'Pole z datą' %}
                 </button>
             </div>
+            <new-field-dialog field-type="date"></new-field-dialog>
             <div class="btn-group" role="group">
                 <button type="button" class="new-field btn btn-block btn-default"
-                        data-field-type="checkbox">
+                        data-field-type="checkbox"
+                        v-on:click="openNewFieldDialog">
                     <i class="glyphicon glyphicon-check"></i>
                     {% trans 'Pole wyboru' %}
                 </button>
             </div>
+            <new-field-dialog field-type="checkbox"></new-field-dialog>
             <div class="btn-group" role="group">
                 <button type="button" class="new-field btn btn-block btn-default"
-                        data-field-type="paragraph">
+                        data-field-type="paragraph"
+                        v-on:click="openNewFieldDialog">
                     <i class="glyphicon glyphicon-header"></i>
                     {% trans 'Blok tekstu' %}
                 </button>
             </div>
+            <new-field-dialog field-type="paragraph"></new-field-dialog>
             <div class="btn-group" role="group">
                 <button type="button" class="new-field btn btn-block btn-default"
-                        data-field-type="select">
+                        data-field-type="select"
+                        v-on:click="openNewFieldDialog">
                     <i class="glyphicon glyphicon-list"></i>
                     {% trans 'Lista wyboru' %}
                 </button>
             </div>
+            <new-field-dialog field-type="select"></new-field-dialog>
+            <div class="btn-group" role="group">
+                <button type="button" class="new-field btn btn-block btn-default"
+                        data-field-type="submit"
+                        v-on:click="openNewFieldDialog">
+                    <i class="glyphicon glyphicon-send"></i>
+                    {% trans 'Submit' %}
+                </button>
+            </div>
+            <new-field-dialog field-type="submit"></new-field-dialog>
         </div>
         <div class="col-sm-7 forms-preview">
+            <input type="hidden" class="fields"
+                   value="{{ form_model.fields|escape }}">
             <h2 class="forms-preview-header">{{ form_model.name }}</h2>
+            <p v-if="fields && fields.length == 0" class="lead">
+                {% trans 'Brak zdefiniowanych pól' %}
+            </p>
+            <div v-for="field in fields" class="fields">
+                <div class="form-group">
+                    {% verbatim %}
+                        <label :for="field.id" v-if="field.type != 'submit'">
+                            {{ field.label }}
+                            <template v-if="field.required">*</template>
+                        </label>
+                        <template v-if="field.type == 'text'">
+                            <input type="text"
+                                   class="form-control"
+                                   :id="field.id" 
+                                   :placeholder="field.placeholder"
+                                   :required="field.required">
+                        </template>
+                        <template v-if="field.type == 'number'">
+                            <input type="number"
+                                   class="form-control"
+                                   :id="field.id"
+                                   :placeholder="field.placeholder"
+                                   :required="field.required">
+                        </template>
+                        <template v-if="field.type == 'date'">
+                            <input type="date"
+                                   class="form-control"
+                                   :id="field.id"
+                                   :placeholder="field.placeholder"
+                                   :required="field.required">
+                        </template>
+                        <template v-if="field.type == 'mail'">
+                            <input type="email"
+                                   class="form-control"
+                                   :id="field.id"
+                                   :placeholder="field.placeholder"
+                                   :required="field.required">
+                        </template>
+                        <template v-if="field.type == 'paragraph'">
+                            <textarea class="form-control"
+                                      :id="field.id"
+                                      :placeholder="field.placeholder"
+                                      :required="field.required"
+                                      disabled>
+                            </textarea>
+                        </template>
+                        <template v-if="field.type == 'submit'">
+                            <input type="submit"
+                                   class="form-control btn btn-primary"
+                                   :id="field.id"
+                                   :value="field.label">
+                        </template>
+                    {% endverbatim %}
+                </div>
+            </div>
+            <div class="row" style="margin: 10px 0px;">
+                <a href="{% url 'forms' %}" class="btn btn-primary">
+                    {% trans 'Powrót' %}
+                </a>
+                <a href="#"
+                   data-href="{% url 'forms_template' forms_id=form_model.id %}" 
+                   data-method="POST" class="btn btn-success save-form">
+                    {% trans 'Zapisz' %}
+                </a>
+            </div>
         </div>
     </div>
-    <a href="{% url 'forms' %}" class="btn btn-primary">{% trans 'Powrót' %}</a>
+
     <script src="{% static 'dynforms/custom/js/forms_builder.js' %}"></script>
 {% endblock %}

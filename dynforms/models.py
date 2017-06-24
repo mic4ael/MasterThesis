@@ -1,3 +1,5 @@
+import json
+
 from django.db import models
 
 
@@ -15,3 +17,31 @@ class FormModel(models.Model):
     def languages_names(self):
         return [lang.name for lang in self.languages.all()]
 
+    def fields(self):
+        return json.dumps([field.as_dict() for field in self.formfield_set.all()])
+
+
+class FormField(models.Model):
+    field_type = models.CharField(max_length=20)
+    field_label = models.CharField(max_length=100)
+    field_placeholder = models.CharField(max_length=500, null=True)
+    field_required = models.BooleanField()
+    form = models.ForeignKey(FormModel, on_delete=models.CASCADE)
+
+    class Meta:
+        ordering = ['id']
+
+    def as_dict(self):
+        return {
+            'id': self.id,
+            'type': self.field_type,
+            'label': self.field_label,
+            'placeholder': self.field_placeholder,
+            'required': self.field_required
+        }
+
+
+class TextTranslation(models.Model):
+    text = models.CharField(max_length=1000)
+    translated = models.CharField(max_length=1000, null=True)
+    language = None

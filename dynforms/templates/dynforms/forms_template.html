@@ -107,54 +107,108 @@
             <p v-if="fields && fields.length == 0" class="lead">
                 {% trans 'Brak zdefiniowanych pól' %}
             </p>
-            <div v-for="field in fields" class="fields">
-                <div class="form-group">
+            <div class="fields">
+                <div class="form-group" v-for="(field, index) in fields">
                     {% verbatim %}
                         <label :for="field.id" v-if="field.type != 'submit'">
                             {{ field.label }}
                             <template v-if="field.required">*</template>
                         </label>
                         <template v-if="field.type == 'text'">
-                            <input type="text"
-                                   class="form-control"
-                                   :id="field.id" 
-                                   :placeholder="field.placeholder"
-                                   :required="field.required">
+                            <div>
+                                <span class="field-input">
+                                    <input type="text"
+                                           class="form-control"
+                                           :data-field-tmp-id="index"
+                                           :id="field.id"
+                                           :placeholder="field.placeholder"
+                                           :required="field.required">
+                                </span>
+                                <span class="field-remove">
+                                    <i class="glyphicon glyphicon-trash"
+                                       v-on:click="removeField"></i>
+                                </span>
+                            </div>
                         </template>
                         <template v-if="field.type == 'number'">
-                            <input type="number"
-                                   class="form-control"
-                                   :id="field.id"
-                                   :placeholder="field.placeholder"
-                                   :required="field.required">
+                            <div>
+                                <span class="field-input">
+                                    <input type="number"
+                                           class="form-control"
+                                           :data-field-tmp-id="index"
+                                           :id="field.id"
+                                           :placeholder="field.placeholder"
+                                           :required="field.required">
+                                </span>
+                                <span class="field-remove">
+                                    <i class="glyphicon glyphicon-trash"
+                                       v-on:click="removeField"></i>
+                                </span>
+                            </div>
                         </template>
                         <template v-if="field.type == 'date'">
-                            <input type="date"
-                                   class="form-control"
-                                   :id="field.id"
-                                   :placeholder="field.placeholder"
-                                   :required="field.required">
+                            <div>
+                                <span class="field-input">
+                                    <input type="date"
+                                           class="form-control"
+                                           :data-field-tmp-id="index"
+                                           :id="field.id"
+                                           :placeholder="field.placeholder"
+                                           :required="field.required">
+                                </span>
+                                <span class="field-remove">
+                                    <i class="glyphicon glyphicon-trash"
+                                       v-on:click="removeField"></i>
+                                </span>
+                            </div>
                         </template>
                         <template v-if="field.type == 'mail'">
-                            <input type="email"
-                                   class="form-control"
-                                   :id="field.id"
-                                   :placeholder="field.placeholder"
-                                   :required="field.required">
+                            <div>
+                                <span class="field-input">
+                                    <input type="email"
+                                           class="form-control"
+                                           :data-field-tmp-id="index"
+                                           :id="field.id"
+                                           :placeholder="field.placeholder"
+                                           :required="field.required">
+                                </span>
+                                <span class="field-remove">
+                                    <i class="glyphicon glyphicon-trash"
+                                       v-on:click="removeField"></i>
+                                </span>
+                            </div>
                         </template>
                         <template v-if="field.type == 'paragraph'">
-                            <textarea class="form-control"
-                                      :id="field.id"
-                                      :placeholder="field.placeholder"
-                                      :required="field.required"
-                                      disabled>
-                            </textarea>
+                            <div>
+                                <span class="field-input">
+                                    <textarea class="form-control"
+                                              :data-field-tmp-id="index"
+                                              :id="field.id"
+                                              :placeholder="field.placeholder"
+                                              :required="field.required"
+                                              disabled>
+                                    </textarea>
+                                </span>
+                                <span class="field-remove">
+                                    <i class="glyphicon glyphicon-trash"
+                                       v-on:click="removeField"></i>
+                                </span>
+                            </div>
                         </template>
                         <template v-if="field.type == 'submit'">
-                            <input type="submit"
-                                   class="form-control btn btn-primary"
-                                   :id="field.id"
-                                   :value="field.label">
+                            <div>
+                                <span class="field-input">
+                                    <input type="submit"
+                                           class="form-control btn btn-primary"
+                                           :data-field-tmp-id="index"
+                                           :id="field.id"
+                                           :value="field.label">
+                                </span>
+                                <span class="field-remove">
+                                    <i class="glyphicon glyphicon-trash"
+                                       v-on:click="removeField"></i>
+                                </span>
+                            </div>
                         </template>
                     {% endverbatim %}
                 </div>

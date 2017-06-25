@@ -77,6 +77,13 @@
                     var fieldSelector = 'div.modal[data-field-type="' + $field.data('field-type') + '"]';
 
                     $(fieldSelector).modal();
+                },
+                removeField: function (event) {
+                    var $target = $(event.target),
+                        $inputField = $target.closest('.field-remove').prev().find('.form-control'),
+                        fieldIndexToRemove = $inputField.data('field-tmp-id');
+
+                    this.$data.fields.splice(fieldIndexToRemove, 1);
                 }
             },
             components: {
@@ -124,6 +131,11 @@
 
         var $this = $(this),
             csrfToken = $('.forms-template').data('csrf-token');
+
+        if (formsPreviewVueInstance.$data.fields.length == 0) {
+            return;
+        }
+
         $.ajax({
             url: $this.data('href'),
             method: $this.data('method'),

@@ -15,3 +15,12 @@
 .forms-preview > .forms-preview-header {
     border-bottom: 1px solid #ccc;
 }
+
+.forms-preview .field-input {
+    display: inline-block;
+    width: 80%;
+}
+
+.forms-preview .field-remove {
+    cursor: pointer;
+}

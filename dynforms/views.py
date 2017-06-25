@@ -94,9 +94,6 @@ class LanguagesView(LoginRequiredMixin, UserIsSuperAdminTest, TemplateView):
             Language.objects.create(**form.cleaned_data).save()
         return HttpResponseRedirect(reverse('languages'))
 
-    def delete(self, request):
-        pass
-
 
 class FormsView(LoginRequiredMixin, UserIsSuperAdminTest, TemplateView):
     template_name = 'dynforms/forms.html'
@@ -168,6 +165,7 @@ class FormsTemplateView(LoginRequiredMixin, UserIsSuperAdminTest, TemplateView):
     def post(self, request, forms_id):
         fields = json.loads(request.POST['fields'])
         form_model = get_object_or_404(FormModel, pk=forms_id)
+        field_ids = [field.id for field in form_model.formfield_set.all()]
         response = []
         for field in fields:
             if field['id'] is None:
@@ -175,6 +173,7 @@ class FormsTemplateView(LoginRequiredMixin, UserIsSuperAdminTest, TemplateView):
                 field_to_save.form = form_model
             else:
                 field_to_save = get_object_or_404(FormField, pk=field['id'])
+                field_ids.remove(int(field['id']))
 
             field_to_save.field_type = field['type']
             field_to_save.field_label = field['label']
@@ -182,5 +181,10 @@ class FormsTemplateView(LoginRequiredMixin, UserIsSuperAdminTest, TemplateView):
             field_to_save.field_required = field.get('required', False)
             field_to_save.save()
             response.append(field_to_save.as_dict())
+
+        if field_ids:
+            for field_id in field_ids:
+                field_to_delete = get_object_or_404(FormField, pk=field_id)
+                field_to_delete.delete()
 
         return JsonResponse({'success': True, 'fields': json.dumps(response)})

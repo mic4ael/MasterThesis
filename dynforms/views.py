@@ -26,7 +26,10 @@ class LoginView(TemplateView):
                                               password=form_data['password'])
             if authenticated_user:
                 login(request, authenticated_user)
-                redirect_url = settings.LOGIN_REDIRECT_URL
+                if authenticated_user.has_perm('dynforms.can_translate_forms'):
+                    redirect_url = reverse('forms_translations')
+                else:
+                    redirect_url = settings.LOGIN_REDIRECT_URL
                 if request.GET.get('next'):
                     redirect_url = request.GET['next']
                 return HttpResponseRedirect(redirect_url)

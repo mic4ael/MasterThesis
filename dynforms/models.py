@@ -59,7 +59,7 @@ class TextTranslation(models.Model):
         if language is None:
             return text
         translation = cls.objects.filter(text=text, language=language).first()
-        return translation.translated if translation is not None else text
+        return translation.translated if translation and translation.translated is not None else text
 
 
 class FormSubmission(models.Model):

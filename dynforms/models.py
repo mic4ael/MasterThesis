@@ -18,6 +18,9 @@ class FormModel(models.Model):
     def languages_names(self):
         return [lang.name for lang in self.languages.all()]
 
+    def languages_tuples(self):
+        return [(lang.code, lang.name) for lang in self.languages.all()]
+
     def fields(self):
         return json.dumps([field.as_dict() for field in self.formfield_set.all()])
 
@@ -50,6 +53,13 @@ class TextTranslation(models.Model):
     text = models.CharField(max_length=1000)
     translated = models.CharField(max_length=1000, null=True)
     language = models.ForeignKey(Language)
+
+    @classmethod
+    def get_translation_for_text_and_lang(cls, text, language):
+        if language is None:
+            return text
+        translation = cls.objects.filter(text=text, language=language).first()
+        return translation.translated if translation is not None else text
 
 
 class FormSubmission(models.Model):

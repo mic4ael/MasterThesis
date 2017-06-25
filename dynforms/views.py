@@ -11,7 +11,7 @@ from django.views.generic.base import TemplateView, View
 
 from dynforms.forms import (LoginForm, RegistrationForm, NewLanguageForm,
                             NewFormTemplateForm)
-from dynforms.models import Language, FormModel, FormField, FormSubmission
+from dynforms.models import Language, FormModel, FormField, FormSubmission, TextTranslation
 from masterthesis import settings
 
 
@@ -181,6 +181,13 @@ class FormsTemplateView(LoginRequiredMixin, UserIsSuperAdminTest, TemplateView):
             field_to_save.field_placeholder = field.get('placeholder')
             field_to_save.field_required = field.get('required', False)
             field_to_save.save()
+            for lang in form_model.languages.all():
+                if field['label']:
+                    if TextTranslation.objects.filter(text=field['label'], language=lang).first() is None:
+                        TextTranslation.objects.create(text=field['label'], language=lang).save()
+                if field.get('placeholder'):
+                    if TextTranslation.objects.filter(text=field['placeholder'], language=lang).first() is None:
+                        TextTranslation.objects.create(text=field['placeholder'], language=lang).save()
             response.append(field_to_save.as_dict())
 
         if field_ids:
@@ -191,32 +198,35 @@ class FormsTemplateView(LoginRequiredMixin, UserIsSuperAdminTest, TemplateView):
         return JsonResponse({'success': True, 'fields': json.dumps(response)})
 
 
-def create_submission_form(form_model, form_kwargs):
+def create_submission_form(form_model, language_code, form_kwargs):
     fields = {}
+    language = Language.objects.filter(code=language_code).first()
     for field in form_model.formfield_set.all():
         field_attrs = {'class': 'form-control'}
         if field.field_placeholder:
-            field_attrs['placeholder'] = field.field_placeholder
+            field_attrs['placeholder'] = TextTranslation.get_translation_for_text_and_lang(field.field_placeholder,
+                                                                                           language)
+        field_label = TextTranslation.get_translation_for_text_and_lang(field.field_label, language)
         if field.field_type == 'text':
-            field_object = forms.CharField(label=field.field_label, required=field.field_required,
+            field_object = forms.CharField(label=field_label, required=field.field_required,
                                            widget=forms.TextInput(attrs=field_attrs))
         elif field.field_type == 'paragraph':
             field_attrs['readonly'] = True
-            field_object = forms.CharField(label=field.field_label, required=field.field_required,
+            field_object = forms.CharField(label=field_label, required=field.field_required,
                                            widget=forms.Textarea(attrs=field_attrs))
         elif field.field_type == 'mail':
-            field_object = forms.EmailField(label=field.field_label, required=field.field_required,
+            field_object = forms.EmailField(label=field_label, required=field.field_required,
                                             widget=forms.EmailInput(attrs=field_attrs))
         elif field.field_type == 'number':
-            field_object = forms.IntegerField(label=field.field_label, required=field.field_required,
+            field_object = forms.IntegerField(label=field_label, required=field.field_required,
                                               widget=forms.NumberInput(attrs=field_attrs))
         elif field.field_type == 'date':
             field_attrs['type'] = 'date'
-            field_object = forms.DateTimeField(label=field.field_label, required=field.field_required,
+            field_object = forms.DateTimeField(label=field_label, required=field.field_required,
                                                widget=forms.DateTimeInput(attrs=field_attrs))
         elif field.field_type == 'submit':
             field_attrs['type'] = 'submit'
-            field_attrs['value'] = field.field_label
+            field_attrs['value'] = field_label
             field_attrs['skip_label'] = True
             field_object = forms.CharField(label=None, widget=forms.TextInput(attrs=field_attrs))
 
@@ -232,17 +242,41 @@ class FormsSubmission(TemplateView):
     def get_context_data(self, **kwargs):
         context = super(FormsSubmission, self).get_context_data(**kwargs)
         context['form_model'] = form_model = get_object_or_404(FormModel, pk=self.kwargs['forms_id'])
-        context['form'] = create_submission_form(form_model, None)
+        context['form'] = create_submission_form(form_model, self.request.GET.get('lang'), None)
         return context
 
     def post(self, request, forms_id):
         form_model = get_object_or_404(FormModel, pk=forms_id)
-        form = create_submission_form(form_model, request.POST)
-        if form_model.max_submissions < form_model.submissions_count + 1:
-            return HttpResponseRedirect(reverse('login'))
+        form = create_submission_form(form_model, None, request.POST)
+        if form_model.max_submissions < form_model.submission_count + 1:
+            return render(request, self.template_name, {'success': False})
         if form.is_valid():
             FormSubmission.objects.create(form=form_model,
                                           submission_data=form.cleaned_data).save()
-            return HttpResponseRedirect(reverse('login'))
+            return render(request, self.template_name, {'success': True})
         return render(request, self.template_name, {'form': form,
                                                     'form_model': form_model})
+
+
+class FormsTranslations(LoginRequiredMixin, TemplateView):
+    template_name = 'dynforms/forms_translations.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(FormsTranslations, self).get_context_data(**kwargs)
+        context['translations'] = TextTranslation.objects.all()
+        return context
+
+
+class FormsTranslationsEdit(LoginRequiredMixin, TemplateView):
+    template_name = 'dynforms/forms_translations_edit.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(FormsTranslationsEdit, self).get_context_data(**kwargs)
+        context['translation'] = TextTranslation.objects.filter(pk=self.kwargs['translations_id']).first()
+        return context
+
+    def post(self, request, translations_id):
+        translation = get_object_or_404(TextTranslation, pk=translations_id)
+        translation.translated = request.POST['text-translated']
+        translation.save()
+        return HttpResponseRedirect(reverse('forms_translations'))

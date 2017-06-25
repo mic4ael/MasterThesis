@@ -14,25 +14,46 @@
     </head>
     <body>
         <div class="container">
-            <div class="page-header">
-                <h1>{% trans 'Wypełnij formularz' %} <small>{{ form_model.name }}</small></h1>
-            </div>
-            <form method="POST">
-                {% csrf_token %}
-                {% for field in form %}
-                    <div class="form-group {% if field.errors %}has-error{% endif %}">
-                        {% if not field.field.widget.attrs.skip_label %}
-                            {{ field.label_tag }} {% if field.field.required %}*{% endif %}
-                        {% endif %}
-                        {{ field }}
-                        {% if field.errors %}
-                            {% for error in field.errors %}
-                                <div class="alert alert-danger">{{ error }}</div>
-                            {% endfor %}
-                        {% endif %}
-                    </div>
-                {% endfor %}
-            </form>
+            {% if form and form_model %}
+                <div class="page-header">
+                    <h1>{% trans 'Wypełnij formularz' %} <small>{{ form_model.name }}</small></h1>
+                    <select onchange="location=this.value;">
+                        <option value="{% url 'forms_submission' forms_id=form_model.id %}">
+                            {% trans 'Wybierz język domyślny' %}
+                        </option>
+                        {% for code, name in form_model.languages_tuples %}
+                            <option value="{% url 'forms_submission' forms_id=form_model.id %}?lang={{ code }}"
+                                    {% if request.GET.lang == code %}selected{% endif %}>
+                                {{ name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <form method="POST">
+                    {% csrf_token %}
+                    {% for field in form %}
+                        <div class="form-group {% if field.errors %}has-error{% endif %}">
+                            {% if not field.field.widget.attrs.skip_label %}
+                                {{ field.label_tag }} {% if field.field.required %}*{% endif %}
+                            {% endif %}
+                            {{ field }}
+                            {% if field.errors %}
+                                {% for error in field.errors %}
+                                    <div class="alert alert-danger">{{ error }}</div>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </form>
+            {% elif success %}
+                <div class="alert alert-success">
+                    <strong>{% trans 'Sukces!' %}</strong> {% trans 'Dziękujemy za zgłoszenie' %}
+                </div>
+            {% else %}
+                <div class="alert alert-danger" style="margin: 5% auto;">
+                    {% trans 'Niestety akcja się nie powiodła. Brak już wolnych zgloszeń' %}
+                </div>
+            {% endif %}
         </div>
     </body>
 </html>

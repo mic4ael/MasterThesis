@@ -1,0 +1,7 @@
+.translations-list td.action-buttons {
+    width: 2%;
+}
+
+.translations-list td.action-buttons span {
+    float: right;
+}

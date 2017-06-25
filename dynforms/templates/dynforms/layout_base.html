@@ -35,8 +35,9 @@
                         </a>
                     </li>
                     {% if perms.dynforms.can_translate_forms or request.user.is_superuser %}
-                        <li class="">
-                            <a href="#">
+                        {% url 'forms_translations' as translations_url %}
+                        <li class="{% if request.get_full_path == translations_url %}active{% endif %}">
+                            <a href="{{ translations_url }}">
                                 <i class="glyphicon glyphicon-list-alt"></i>
                                 {% trans 'Formularze do tłumaczenia' %}
                             </a>

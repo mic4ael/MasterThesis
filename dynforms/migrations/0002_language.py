@@ -9,7 +9,7 @@ from dynforms.models import Language
 
 def add_default_languages(apps, schema_editor):
     Language.objects.create(code='en', name='English').save()
-    Language.objects.create(code='pl', name='Polski').save()
+    Language.objects.create(code='de', name='Deutsch').save()
 
 
 class Migration(migrations.Migration):

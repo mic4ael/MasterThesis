@@ -1,0 +1,62 @@
+{% extends 'dynforms/layout_base.html' %}
+
+{% load i18n %}
+{% load static %}
+
+
+{% block title %}
+    {% trans 'Potrzebne tłumaczenia' %}
+{% endblock %}
+
+{% block styles %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css"
+          href="{% static "dynforms/custom/css/translations.css" %}">
+{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <h1>{% trans 'Tłumaczenia' %}</h1>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            {% trans 'Lista wszystkich tekstów wymagająych tłumaczenia' %}
+        </div>
+        <table class="table table-bordered translations-list">
+            <thead>
+                <tr>
+                    <th>{% trans 'Tekst do tłumaczenia' %}</th>
+                    <th>{% trans 'Tłumaczenie' %}
+                    <th>{% trans 'Język' %}</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for translation in translations %}
+                    <tr>
+                        <td>{{ translation.text }}</td>
+                        <td>
+                            {% if translation.translated %}
+                                {{ translation.translated }}
+                            {% else %}
+                                {% trans 'Brak tłumaczenia' %}
+                            {% endif %}
+                        </td>
+                        <td>{{ translation.language.name }}</td>
+                        <td class="action-buttons">
+                            <span>
+                                <a href="{% url 'forms_translations_edit' translations_id=translation.id %}">
+                                    <i class="glyphicon glyphicon-edit"></i>
+                                </a>
+                            </span>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3">{% trans 'Brak tekstów do tłumaczenia' %}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

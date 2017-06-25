@@ -1,0 +1,44 @@
+{% extends 'dynforms/layout_base.html' %}
+
+{% load i18n %}
+{% load static %}
+
+
+{% block title %}
+    {% trans 'Dostępne języki' %}
+{% endblock %}
+
+{% block styles %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css"
+          href="{% static "dynforms/custom/css/languages.css" %}">
+{% endblock %}
+
+{% block content %}
+    <div class="page-header">
+        <h1>{% trans 'Nadesłane zgłoszenia' %}</h1>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            {% trans 'Lista zgłoszeń' %}
+        </div>
+        <table class="table table-bordered languages-list">
+            <thead>
+                <tr>
+                    {% for field_name in form.field_names %}
+                        <th>{{ field_name }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for submission in form.submissions_data %}
+                    <tr>
+                        {% for answer in submission %}
+                            <td>{{ answer.1 }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

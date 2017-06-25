@@ -24,6 +24,23 @@ class FormModel(models.Model):
     def fields(self):
         return json.dumps([field.as_dict() for field in self.formfield_set.all()])
 
+    def field_names(self):
+        return [field.field_label for field in self.formfield_set.all() if field.field_type != 'submit']
+
+    def submissions_data(self):
+        data = []
+        for submission in self.formsubmission_set.all():
+            submission_data = submission.submission_data
+            submission = []
+            for key, value in submission_data.items():
+                fields_id = key.split('_')[1]
+                field = FormField.objects.filter(pk=fields_id).first()
+                if field.field_type == 'submit':
+                    continue
+                submission.append((field.field_label, value))
+            data.append(submission)
+        return data
+
     @property
     def submission_count(self):
         return len(self.formsubmission_set.all())

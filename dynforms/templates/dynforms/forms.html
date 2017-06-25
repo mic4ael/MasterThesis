@@ -59,6 +59,9 @@
                                data-method="DELETE">
                                 <i class="glyphicon glyphicon-trash" style="color: red;"></i>
                             </a>
+                            <a href="{% url 'forms_submissions' forms_id=form.id %}">
+                                <i class="glyphicon glyphicon-list"></i>
+                            </a>
                             <a href="{% url 'forms_template' forms_id=form.id %}" style="float: right; padding-right: 10px;">
                                 <i class="glyphicon glyphicon-edit"></i>
                             </a>

@@ -261,6 +261,17 @@ class FormsSubmission(TemplateView):
                                                     'form_model': form_model})
 
 
+class FormsSubmissions(TemplateView):
+    template_name = 'dynforms/forms_submissions.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(FormsSubmissions, self).get_context_data(**kwargs)
+        form_model = get_object_or_404(FormModel, pk=self.kwargs['forms_id'])
+        context['form'] = form_model
+        context['get_by_key'] = lambda d, k: d[k]
+        return context
+
+
 class FormsTranslations(LoginRequiredMixin, TemplateView):
     template_name = 'dynforms/forms_translations.html'
 

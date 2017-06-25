@@ -12,5 +12,6 @@ urlpatterns = [
     url(r'^forms$', views.FormsView.as_view(), name='forms'),
     url(r'^forms/new$', views.NewFormsView.as_view(), name='new_forms_template'),
     url(r'^forms/(?P<forms_id>[0-9]+)$', views.EditFormsView.as_view(), name='manage_form'),
-    url(r'^forms/template/(?P<forms_id>[0-9]+)$', views.FormsTemplateView.as_view(), name='forms_template')
+    url(r'^forms/template/(?P<forms_id>[0-9]+)$', views.FormsTemplateView.as_view(), name='forms_template'),
+    url(r'^forms/submission/(?P<forms_id>[0-9]+)$', views.FormsSubmission.as_view(), name='forms_submission')
 ]

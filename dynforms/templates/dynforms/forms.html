@@ -49,7 +49,7 @@
                                 {{ form.max_submissions }}
                             {% endif %}
                         </td>
-                        <td>0</td>
+                        <td>{{ form.submission_count }}</td>
                         <td>
                             {{ form.languages_names|join:", " }}
                         </td>

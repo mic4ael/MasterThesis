@@ -1,5 +1,6 @@
 import json
 
+from django.contrib.postgres.fields import JSONField
 from django.db import models
 
 
@@ -19,6 +20,10 @@ class FormModel(models.Model):
 
     def fields(self):
         return json.dumps([field.as_dict() for field in self.formfield_set.all()])
+
+    @property
+    def submission_count(self):
+        return len(self.formsubmission_set.all())
 
 
 class FormField(models.Model):
@@ -44,4 +49,9 @@ class FormField(models.Model):
 class TextTranslation(models.Model):
     text = models.CharField(max_length=1000)
     translated = models.CharField(max_length=1000, null=True)
-    language = None
+    language = models.ForeignKey(Language)
+
+
+class FormSubmission(models.Model):
+    form = models.ForeignKey(FormModel, on_delete=models.CASCADE)
+    submission_data = JSONField()

@@ -1,0 +1,38 @@
+{% load i18n %}
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% trans 'Wypełnij formularz' %}</title>
+        <meta charset="UTF-8">
+
+        <link rel="stylesheet" type="text/css"
+              href="{% static "dynforms/bootstrap/css/bootstrap.css" %}">
+        <link rel="stylesheet" type="text/css"
+              href="{% static "dynforms/custom/css/forms_submission.css" %}">
+    </head>
+    <body>
+        <div class="container">
+            <div class="page-header">
+                <h1>{% trans 'Wypełnij formularz' %} <small>{{ form_model.name }}</small></h1>
+            </div>
+            <form method="POST">
+                {% csrf_token %}
+                {% for field in form %}
+                    <div class="form-group {% if field.errors %}has-error{% endif %}">
+                        {% if not field.field.widget.attrs.skip_label %}
+                            {{ field.label_tag }} {% if field.field.required %}*{% endif %}
+                        {% endif %}
+                        {{ field }}
+                        {% if field.errors %}
+                            {% for error in field.errors %}
+                                <div class="alert alert-danger">{{ error }}</div>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </form>
+        </div>
+    </body>
+</html>

@@ -1,5 +1,6 @@
 import json
 
+from django import forms
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth.models import User, Permission
@@ -10,7 +11,7 @@ from django.views.generic.base import TemplateView, View
 
 from dynforms.forms import (LoginForm, RegistrationForm, NewLanguageForm,
                             NewFormTemplateForm)
-from dynforms.models import Language, FormModel, FormField
+from dynforms.models import Language, FormModel, FormField, FormSubmission
 from masterthesis import settings
 
 
@@ -159,7 +160,7 @@ class FormsTemplateView(LoginRequiredMixin, UserIsSuperAdminTest, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(FormsTemplateView, self).get_context_data(**kwargs)
-        context['form_model'] = FormModel.objects.get(pk=self.kwargs['forms_id'])
+        context['form_model'] = get_object_or_404(FormModel, pk=self.kwargs['forms_id'])
         return context
 
     def post(self, request, forms_id):
@@ -188,3 +189,60 @@ class FormsTemplateView(LoginRequiredMixin, UserIsSuperAdminTest, TemplateView):
                 field_to_delete.delete()
 
         return JsonResponse({'success': True, 'fields': json.dumps(response)})
+
+
+def create_submission_form(form_model, form_kwargs):
+    fields = {}
+    for field in form_model.formfield_set.all():
+        field_attrs = {'class': 'form-control'}
+        if field.field_placeholder:
+            field_attrs['placeholder'] = field.field_placeholder
+        if field.field_type == 'text':
+            field_object = forms.CharField(label=field.field_label, required=field.field_required,
+                                           widget=forms.TextInput(attrs=field_attrs))
+        elif field.field_type == 'paragraph':
+            field_attrs['readonly'] = True
+            field_object = forms.CharField(label=field.field_label, required=field.field_required,
+                                           widget=forms.Textarea(attrs=field_attrs))
+        elif field.field_type == 'mail':
+            field_object = forms.EmailField(label=field.field_label, required=field.field_required,
+                                            widget=forms.EmailInput(attrs=field_attrs))
+        elif field.field_type == 'number':
+            field_object = forms.IntegerField(label=field.field_label, required=field.field_required,
+                                              widget=forms.NumberInput(attrs=field_attrs))
+        elif field.field_type == 'date':
+            field_attrs['type'] = 'date'
+            field_object = forms.DateTimeField(label=field.field_label, required=field.field_required,
+                                               widget=forms.DateTimeInput(attrs=field_attrs))
+        elif field.field_type == 'submit':
+            field_attrs['type'] = 'submit'
+            field_attrs['value'] = field.field_label
+            field_attrs['skip_label'] = True
+            field_object = forms.CharField(label=None, widget=forms.TextInput(attrs=field_attrs))
+
+        fields['field_' + str(field.id)] = field_object
+
+    new_form_class = type('SubmissionForm', (forms.Form,), fields)
+    return new_form_class(form_kwargs)
+
+
+class FormsSubmission(TemplateView):
+    template_name = 'dynforms/forms_submission.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(FormsSubmission, self).get_context_data(**kwargs)
+        context['form_model'] = form_model = get_object_or_404(FormModel, pk=self.kwargs['forms_id'])
+        context['form'] = create_submission_form(form_model, None)
+        return context
+
+    def post(self, request, forms_id):
+        form_model = get_object_or_404(FormModel, pk=forms_id)
+        form = create_submission_form(form_model, request.POST)
+        if form_model.max_submissions < form_model.submissions_count + 1:
+            return HttpResponseRedirect(reverse('login'))
+        if form.is_valid():
+            FormSubmission.objects.create(form=form_model,
+                                          submission_data=form.cleaned_data).save()
+            return HttpResponseRedirect(reverse('login'))
+        return render(request, self.template_name, {'form': form,
+                                                    'form_model': form_model})

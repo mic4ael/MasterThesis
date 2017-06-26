@@ -32,11 +32,11 @@ class FormModel(models.Model):
         for submission in self.formsubmission_set.all():
             submission_data = submission.submission_data
             submission = []
-            for key, value in submission_data.items():
-                fields_id = key.split('_')[1]
-                field = FormField.objects.filter(pk=fields_id).first()
+            for field in self.formfield_set.all():
+                key = 'field_{}'.format(field.id)
                 if field.field_type == 'submit':
                     continue
+                value = submission_data.get(key)
                 submission.append((field.field_label, value))
             data.append(submission)
         return data

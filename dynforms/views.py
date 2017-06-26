@@ -254,6 +254,8 @@ class FormsSubmission(TemplateView):
         if form_model.max_submissions < form_model.submission_count + 1:
             return render(request, self.template_name, {'success': False})
         if form.is_valid():
+            for key, val in form.cleaned_data.items():
+                form.cleaned_data[key] = str(val)
             FormSubmission.objects.create(form=form_model,
                                           submission_data=form.cleaned_data).save()
             return render(request, self.template_name, {'success': True})
